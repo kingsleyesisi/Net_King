@@ -2,25 +2,20 @@ import nmap
 import time
 
 
+last_numb = [i for i in range(0, 256)]
 
-def Host_IP_Addr():
-    Third_numb = [i for i in range(1,1000)]
-    Last_numb = [i for i in range(1,1000)]
-
-    Third_digit = 0 
-    Last_digit = 0
-
+def scan_ip(base_ip):
+    nm = nmap.PortScanner()
+    Third_numb = range(0, 256)
     for Third in Third_numb:
-        Third_digit =+ Third
-        for Last in Last_numb:
-            Last_digit =+ Last
-            host = f'192.168.{Third_digit}.{Last_digit}'
+        for Last in last_numb:
+            host = f'{base_ip}.{Third}.{Last}'
             # print(host)
 
-def run(Host_IP_Addr):
+def run(base_ip):
     start_time = time.time()
-    Host_IP_Addr()
+    scan_ip(base_ip)
     end_time = time.time()
     print(f'Runtime: {end_time - start_time} seconds')
 
-run(Host_IP_Addr)
+run('192.168')
