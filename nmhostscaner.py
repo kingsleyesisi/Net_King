@@ -2,8 +2,8 @@ import nmap
 import time
 import threading
 import os
+import sys
 import time 
-
 
 # Check which operating system  is running on either windows, mac or linux 
 def check_os():
@@ -20,6 +20,7 @@ def check_os():
         => 'windows'
         => 'linux'
         => 'mac'
+
     """
 
     if os.name == 'nt':
@@ -28,7 +29,6 @@ def check_os():
         return 'linux'
     else:
         return 'mac'
-
 UserOS = check_os()
 
 def scan_ip(base_ip, port_range: str = '5000'):
@@ -49,6 +49,15 @@ def scan_ip(base_ip, port_range: str = '5000'):
     """
     last_numb = [i for i in range(0, 256)]
     Third_numb = range(0, 256)
+    try:
+        nm = nmap.PortScanner()
+
+    except nmap.PortScannerError:
+        print('Nmap not found in this system', sys.exc_info()[0])
+        
+        """ Download and install nmap if not found in the system """
+        from download import download_and_install_nmap
+        download_and_install_nmap(UserOS)
 
     # Generating the IP address last digits and scanning the IP address
     for Third in Third_numb:
@@ -56,21 +65,16 @@ def scan_ip(base_ip, port_range: str = '5000'):
             GateWay = f'{base_ip}.{Third}.{Last}'
             
             # Scanning for open ports
-        try:
-            nm = nmap.PortScanner()
             nm.scan(GateWay, port_range) 
             if nm[GateWay].state() == 'up':
-                pass
-                # print(f'Host : {GateWay} ({nm[GateWay].hostname()}) is up')
+                print(f'Host : {GateWay} ({nm[GateWay].hostname()}) is up')
 
             for proto in nm[GateWay].all_protocols():
                 lport = nm[GateWay][proto].keys()
                 for port in lport:
-                    pass
-                    # print(f'Host : {GateWay} ({nm[GateWay].hostname()})')
-                    # print(f'Port : {port}\tState : {nm[GateWay][proto][port]["state"]}')
-        except Exception as e:
-            print(e)
+                    print(f'Host : {GateWay} ({nm[GateWay].hostname()})')
+                    print(f'Port : {port}\tState : {nm[GateWay][proto][port]["state"]}')
+    return nm
 
 # Check Run Time of the function 
 def run(base_ip):
