@@ -5,7 +5,6 @@ import os
 import sys
 
 
-
 start_time = time.time()
 def scan_ports(target, start_port, end_port):
   print(f"Scanning target {target} from port {start_port} to {end_port}")
@@ -14,13 +13,22 @@ def scan_ports(target, start_port, end_port):
     socket.setdefaulttimeout(0.001)
     result = sock.connect_ex((target, port))
     addr_info = socket.getaddrinfo(target, port)
-    for addr in addr_info:
-      print(f"Address info: {addr}")
+    if result == 0:
+      print(f"Port {port}: Open")
+      print(f"Address Info: {addr_info}")
     if result == 0:
       print(f"Port {port}: Open")
     sock.close()
 end_time = time.time()
 print(time.strftime("%H:%M:%S", time.gmtime(end_time - start_time)))
+
+
+
+
+
+
+
+
 
 if __name__ == "__main__":
   target = '127.0.0.1'
