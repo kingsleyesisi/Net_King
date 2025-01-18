@@ -1,4 +1,4 @@
-# Host-Scanner-Nmap (Python)
+# Net King (Network Hacking Script)
 
 This is a simple host scanner built using Nmap and Python. It allows you to scan a network or a specific host for open ports and services, as well as other devices connected to that host.
 

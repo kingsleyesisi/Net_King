@@ -38,7 +38,7 @@ def scan_networks():
         return "No Wireless Interface Detected"
       
     except Exception as e:
-      raise e
+      return e
     
 
 if __name__ == '__main__':
