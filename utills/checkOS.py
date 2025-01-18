@@ -24,3 +24,6 @@ def check_os():
         return 'linux'
     else:
         return 'mac'
+    
+if __name__ == '__main__':
+    print(check_os())

@@ -1,9 +1,12 @@
 from utills.checkOS import check_os
+from utills.runtime import runtime
+
 import os 
 import subprocess
 import sys
-import time
 
+
+@runtime
 def scan_networks():
   """
   Scan for available WiFi networks for different operating system 
@@ -25,7 +28,19 @@ def scan_networks():
     result = subprocess.run(["netsh", "wlan", "show", "network"], capture_output=True, text=True).stdout
     return result
   
-  # elif scannerOS == "linux":
+  elif scannerOS == "linux":
+    try:
+      result = subprocess.run(["ip", "addr", "show"], capture_output=True, text=True).stdout
+
+      if "wlan" or 'wlan0' in result:
+        return "Discovered wireless Interface in this device"
+      else:
+        return "No Wireless Interface Detected"
+      
+    except Exception as e:
+      raise e
     
 
-scan_networks()
+if __name__ == '__main__':
+  test_function = scan_networks()
+  print(test_function)
