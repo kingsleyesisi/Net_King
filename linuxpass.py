@@ -12,9 +12,9 @@ class LinuxPass:
     
     def Password(username):
         user = username
-        path2 = '/etc/shadow'
+        path1 = '/etc/shadow'
         path2 = '/etc/passwd'
-        system = sp.run(["sudo", "cat", path2], capture_output=True, text=True).stdout
+        system = sp.run(["sudo", "cat", path2 or path1], capture_output=True, text=True).stdout
         return system
 
 if __name__ == "__main__":

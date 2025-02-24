@@ -34,7 +34,7 @@ def scan_ip(base_ip, port_range: str = '5000'):
         print('Nmap not found in this system', sys.exc_info()[0])
         
         """ Download and install nmap if not found in the system """
-        from download import download_and_install_nmap
+        from utills.download import download_and_install_nmap
         download_and_install_nmap(UserOS)
 
     # Generating the IP address last digits and scanning the IP address

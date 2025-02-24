@@ -4,10 +4,19 @@ from utills.runtime import runtime
 import os 
 import subprocess
 import sys
+import socket
+
+
+# Scan a website for it's IP address
+
+def WebIPScan(url, *agr, **kwagr):
+  wurl = (url, 80)
+  scan = socket.getaddrinfo("example.org", 80, proto=socket.IPPROTO_TCP)
+  return scan
 
 
 @runtime
-def scan_networks():
+def WifiScan():
   """
   Scan for available WiFi networks for different operating system 
   either windows or Linux operating system. 
@@ -42,5 +51,6 @@ def scan_networks():
     
 
 if __name__ == '__main__':
-  test_function = scan_networks()
-  print(test_function)
+  url = 'google.com'
+  result = WebIPScan(url)
+  print(result)
